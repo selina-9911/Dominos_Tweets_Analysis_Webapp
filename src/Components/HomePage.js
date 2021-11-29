@@ -1,30 +1,18 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 
-export default class HomePage extends Component {
-  state = {
-    score: []
-  }
+const HomePage = () => { 
 
-  componentDidMount(){
+  const [score, setScore] = useState(0)
+
+  useEffect(() => {
     fetch('/dominoScore').then(
       res => res.json()
     ).then(
       data => {
-        this.setState({
-          score: [data['score']]
-        });
+        setScore(4) //subject to change
         console.log('set score state; ',data)
-      });
-  }
-
-  render() {
-    const {score} = this.state
-    const thescore = score.length ? (
-      score.map(score => {
-        return (score)
       })
-      ) : (<h1 style={{color:"#FAEBD7"}}>Loading...</h1>
-    );
+  },[]);
 
     return (
         <div>
@@ -34,14 +22,18 @@ export default class HomePage extends Component {
                 <img class="masthead-avatar mb-5" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Dominos_pizza_logo.svg/1200px-Dominos_pizza_logo.svg.png" alt="dominos_logo" />
                 
                 <div>
-                    <h1 class="masthead-heading text-uppercase mb-0">{thescore}/5</h1>
+                    <h1 class="masthead-heading text-uppercase mb-0">{score === 0 ? (<i class="fas fa-sync fa-spin"></i>) : score}/5</h1>
                 </div>
                 
                 <h3>Sentiment Score</h3>
                 
                 <div class="divider-custom divider-light">
                     <div class="divider-custom-icon">
-                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
+                     {score === 1 ? (<i class="fas fa-star"></i>) : null}
+                     {score === 2 ? (<div> <i class="fas fa-star"></i> <i class="fas fa-star"></i></div>) : null}
+                     {score === 3 ? (<div> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i></div>) : null}
+                     {score === 4 ? (<div> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i></div>) : null}
+                     {score === 5 ? (<div> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i></div>) : null}
                     </div>
                 </div>
                 
@@ -51,4 +43,5 @@ export default class HomePage extends Component {
         </div>
     );
   }
-}
+
+export default HomePage;
