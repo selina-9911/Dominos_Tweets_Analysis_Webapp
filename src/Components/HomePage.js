@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 const HomePage = () => { 
 
-  const [score, setScore] = useState(0)
+  const [score, setScore] = useState("")
 
   useEffect(() => {
     fetch('/dominoScore').then(

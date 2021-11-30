@@ -4,8 +4,11 @@ const UserNLP = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [step1Completed, setStep1Completed] = useState(null);
   const [metadata, setMetadata] = useState(null);
+  const [imgUrl, setImgUrl] = useState(null);
   const [step2Completed, setStep2Completed] = useState(null);
   const [userScore, setUserScore] = useState(null);
+  const [step3Completed = null, setStep3Completed] = useState(null)
+  
 
   // useEffect(
   //     () => {
@@ -19,7 +22,7 @@ const UserNLP = () => {
 
   const handleSubmitFile = (e) => {
     e.preventDefault();
-    console.log(selectedFile);
+    console.log('uploaded',selectedFile);
     const fileReader = new FileReader();
     fileReader.readAsText(e.target.files[0], "UTF-8");
     fileReader.onload = (e) => {
@@ -30,6 +33,7 @@ const UserNLP = () => {
   const handleCompleteStep1 = (e) => {
     e.preventDefault();
     setStep1Completed(true);
+    console.log("step1 complete",selectedFile)
   };
 
   //functions for step2
@@ -37,7 +41,7 @@ const UserNLP = () => {
     const img = new Image();
     img.addEventListener("load", function () {
       alert(
-        "the image size of the first image attribute is " +
+        "The size of the uploaded image is " +
           this.naturalWidth +
           " X " +
           this.naturalHeight
@@ -89,29 +93,31 @@ const UserNLP = () => {
     e.preventDefault();
     console.log(selectedFile);
     const JSONfile = JSON.parse(selectedFile);
-    const firstline = JSONfile.Countries[0];
+    const firstline = JSONfile[0];
     //extracting attributes
-    const attributes = Object.keys(firstline);
+    const attributes = 1;
     const filesize = memorySizeOf(selectedFile);
 
     //setting output hashmap
     const output = new Map();
     output.set(
       "firstFiveLines",
-      JSON.stringify(JSONfile.Countries.slice(0, 5))
+      JSON.stringify({"0":JSONfile[0],"1":JSONfile[1], "2":JSONfile[2],"3":JSONfile[3], "4":JSONfile[4]})
     );
-    output.set("numOfAttributes", attributes.length);
-    output.set("numOfRows", JSONfile.Countries.length);
+    output.set("numOfAttributes", attributes);
+    output.set("numOfRows", Object.keys(JSONfile).length);
     output.set("filesize", filesize);
     setMetadata(output);
 
-    console.log(metadata);
+    console.log('metadata', metadata);
     setStep2Completed(true);
   };
 
   //functions for step 3
+
   const handleGetScore = (e) => {
     e.preventDefault();
+    setStep3Completed(false);
     fetch('/getUserScore',{
         method: 'POST',
         body: selectedFile
@@ -119,10 +125,11 @@ const UserNLP = () => {
         res => res.json()
       ).then(
         data => {
-          console.log('User Score: ', data)
-          setUserScore(data)
-        });
+          console.log('User Score: ', data);
+          setUserScore(parseFloat(data["score"]))
+        })       
   };
+
   return (
     <div>
       <header class="masthead bg-primary text-white text-center">
@@ -192,9 +199,13 @@ const UserNLP = () => {
             </div>
             <div class="divider-custom">
               <p> File Size : {step2Completed && metadata.get("filesize")}</p>
+              
             </div>
+            <p> Image Size : </p>
             <div class="divider-custom">
-              {/* <p> First Image Size : Will be shown inn the popup message! </p>{step2Completed && getMeta('https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/1200px-Image_created_with_a_mobile_phone.png')} */}
+              {step2Completed && getMeta('')}
+                    <input class="form-control" onChange={(e)=> setImgUrl(e.target.value)} type="text" placeholder=" Enter an image url and a popup message will show up !"/>
+                    <input class="btn btn-secondary" onClick={()=> getMeta(imgUrl)} value="Submit" />
             </div>
             <p> Data Preview :</p>
             <div class="divider-custom">
@@ -230,8 +241,11 @@ const UserNLP = () => {
               </div>
             </div>
             <div class="divider-custom">
-              <p>
-                Sentiment from your Tweets : { typeof userScore !== 'undefined' &&  <h1>{userScore}/5</h1>}
+              <p> 
+                Sentiment from your Tweets :
+                { step3Completed === false &&  <i class="fas fa-sync fa-spin"></i> } 
+                { typeof userScore !== undefined &&  <h1>{userScore}/5</h1>}
+                
               </p>
             </div>
           </div>

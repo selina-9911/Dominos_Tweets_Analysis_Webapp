@@ -2,7 +2,11 @@ from flask import Flask, request
 from joblib import load
 import os
 import json
+import ast
 import numpy as np
+from models.dataCleaning import clean
+from models.userModel import predict
+
 
 app = Flask(__name__)
 
@@ -22,16 +26,12 @@ def getScore():
 def userScore():
     if request.method == "POST":
         result = request.data
-        result = json.dumps(result.decode("utf-8"))
-        
-        # file = request.files['file']
-        # filepath = os.path.join('data',file.filenname)
-        # file.save(filepath)
-
-        # return {"value": str(file.name)}
-        
-        return result
+        result = json.loads(result.decode("utf-8"))
+        clean(result) #clean data and send to firebase
+        score = str(predict())
+        return {"score": score}
+    
     return "default"
 
 if __name__ == "__main__":
-    app.run()
+    app.run(use_reloader=True)
