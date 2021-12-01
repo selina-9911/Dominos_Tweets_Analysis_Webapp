@@ -22,4 +22,5 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-/api/config
+/api/models/training.1600000.processed.noemoticon.csv
+/api/kafka/config.py
