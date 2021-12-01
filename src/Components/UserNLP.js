@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 
+
 const UserNLP = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [step1Completed, setStep1Completed] = useState(null);
@@ -102,7 +103,7 @@ const UserNLP = () => {
     const output = new Map();
     output.set(
       "firstFiveLines",
-      JSON.stringify({"0":JSONfile[0],"1":JSONfile[1], "2":JSONfile[2],"3":JSONfile[3], "4":JSONfile[4]})
+      JSON.stringify({"0":JSONfile[0],"1":JSONfile[1], "2":JSONfile[2],"3":JSONfile[3], "4":JSONfile[4]},null,'\t')
     );
     output.set("numOfAttributes", attributes);
     output.set("numOfRows", Object.keys(JSONfile).length);
@@ -201,15 +202,16 @@ const UserNLP = () => {
               <p> File Size : {step2Completed && metadata.get("filesize")}</p>
               
             </div>
+
+            <p> Data Preview :</p>
+            <div class="divider-custom">
+            <pre id="json">{step2Completed && metadata.get("firstFiveLines")}</pre>
+            </div>
             <p> Image Size : </p>
             <div class="divider-custom">
               {step2Completed && getMeta('')}
                     <input class="form-control" onChange={(e)=> setImgUrl(e.target.value)} type="text" placeholder=" Enter an image url and a popup message will show up !"/>
                     <input class="btn btn-secondary" onClick={()=> getMeta(imgUrl)} value="Submit" />
-            </div>
-            <p> Data Preview :</p>
-            <div class="divider-custom">
-              {step2Completed && metadata.get("firstFiveLines")}
             </div>
             {step2Completed && (
               <div class="text-center mt-4 center-block">

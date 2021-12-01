@@ -1,6 +1,9 @@
 import React from 'react'
 
 const About = () => {
+    const projectDetail = "The motivation behind the project is that people’s purchasing decisions nowadays are easily influenced by social media testimonials about the specific products sold by the vendors. Companies would also like to build a strong brand image by providing timely customer service and tracking comments about their products through social media. Therefore, our group decided to set our focus on providing the general customer reviews on a well-known brand by tracking its Twitter data. In this case, we picked Domino’s Pizza because they are known for their utilization of social media accounts."
+	
+
   return (
     <div>
         <header class="masthead bg-primary text-white text-center">
@@ -17,7 +20,8 @@ const About = () => {
                 
                 <div class="divider-custom">
                     <div class="col-lg-6 justify-content-center">
-                        <p class="lead justify-content-center"> We are obtaining Domino’s Pizza streaming data from Twitter and based on those real-time tweets to perform sentiment analysis with a conclusion of rating system on if the market carries positive or negative attitude as a whole toward this type of pizza, then give feedback to the company. </p></div>
+                        <p class="lead justify-content-center"> {projectDetail} </p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -34,7 +38,10 @@ const About = () => {
                     <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
                     <div class="divider-custom-line"></div>
                 </div>
-                <div class="divider-custom"><p>Selina, Yingning, Wangying</p></div>
+                <div class="divider-custom"></div>
+                    <p>Selina Lin :    qinghaol@usc.edu</p>
+                    <p>Yingning Fan :    yingning@usc.edu</p>
+                    <p>Wangying Yang :   wyang890@usc.edu</p>
             </div>
         </section>
         </header>
