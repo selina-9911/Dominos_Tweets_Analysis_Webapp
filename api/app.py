@@ -6,15 +6,17 @@ import ast
 import numpy as np
 from models.dataCleaning import clean
 from models.userModel import predict
-from models.SparkML import sparkPredict
+from models.SparkPredict import sparkPredict
+from pyspark import SparkContext
 
 
 app = Flask(__name__)
 
 @app.route("/dominoScore", methods = ['GET'])
 def getScore():
-	result = {"score": 4}
-	return result
+    print("server!")
+    score = str(sparkPredict())
+    return score
 
 @app.route("/getUserScore", methods = ['GET','POST'])
 def userScore():

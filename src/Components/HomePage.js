@@ -17,8 +17,9 @@ const HomePage = () => {
     fetch("/dominoScore")
       .then((res) => res.json())
       .then((data) => {
-        setScore(4); //subject to change
-        console.log("set score state; ", data);
+        console.log("set score state: ", data.toString());
+        setScore(data.toString())
+        console.log("stored score state: ", data);
       });
   },[]);
 
@@ -97,7 +98,8 @@ const HomePage = () => {
 
           <div>
             <h1 class="masthead-heading text-uppercase mb-0">
-              {score === 0 ? <i class="fas fa-sync fa-spin"></i> : score}/5
+              {!score && <div><i class="fas fa-sync fa-spin"></i></div>}
+              {score ? score  : null}/5
             </h1>
           </div>
 
