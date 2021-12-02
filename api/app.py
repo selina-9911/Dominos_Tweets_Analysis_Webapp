@@ -1,13 +1,13 @@
 from flask import Flask, request
-from joblib import load
+from tensorflow import keras
 import os
 import json
 import ast
 import numpy as np
 from models.dataCleaning import clean
-from models.userModel import predict
+from models.userPredict import userPredict
 from models.SparkPredict import sparkPredict
-from pyspark import SparkContext
+
 
 
 app = Flask(__name__)
@@ -24,10 +24,11 @@ def userScore():
         result = request.data
         result = json.loads(result.decode("utf-8"))
         clean(result) #clean data and send to firebase
-        score = str(predict())
+        score = str(userPredict())
+        print("complete keras model:",score)
         return {"score": score}
     
     return "default"
 
 if __name__ == "__main__":
-	app.run(use_reloader=True)
+	app.run(use_reloader= True )

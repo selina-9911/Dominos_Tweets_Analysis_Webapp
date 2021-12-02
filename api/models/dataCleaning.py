@@ -11,11 +11,6 @@ import re
 from string import punctuation
 
 
-twi = ['@dominos This is super cool y’all, I always get sad when I see people using the delivery services with all your fee… https://t.co/QHEvOsYf1G',
- '@AllisonByProxy @dominos Charge back.',
- '@dominos I am but it takes over 25 minutes to do a quality check on the pizza I ordered been waiting over an hour now.',
- 'Man @dominos car side delivery is on point. Never had a single order over the time limit.']
-
 
 def clean(twi):
   # Instantiate a tweet tokenizer that will preserve each word (or token) as it is

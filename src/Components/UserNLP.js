@@ -8,18 +8,13 @@ const UserNLP = () => {
   const [imgUrl, setImgUrl] = useState(null);
   const [step2Completed, setStep2Completed] = useState(null);
   const [userScore, setUserScore] = useState(null);
-  const [step3Completed = null, setStep3Completed] = useState(null)
+  const [step3Completed, setStep3Completed] = useState(true)
   
 
-  // useEffect(
-  //     () => {
-  //     fetch('/dominoScore').then(
-  //       res => res.json()
-  //     ).then(
-  //       data => {
-  //         console.log('set score state; ',data)
-  //       });
-  //   },[]);
+  useEffect(
+      () => {
+      setStep3Completed(true);
+    },[userScore]);
 
   const handleSubmitFile = (e) => {
     e.preventDefault();
@@ -128,7 +123,7 @@ const UserNLP = () => {
         data => {
           console.log('User Score: ', data);
           setUserScore(parseFloat(data["score"]))
-        })       
+        })   
   };
 
   return (
@@ -245,7 +240,7 @@ const UserNLP = () => {
             <div class="divider-custom">
               <p> 
                 Sentiment from your Tweets :
-                { step3Completed === false &&  <i class="fas fa-sync fa-spin"></i> } 
+                { step3Completed === false && <div><i class="fas fa-sync fa-spin"></i></div> } 
                 { typeof userScore !== undefined &&  <h1>{userScore}/5</h1>}
                 
               </p>

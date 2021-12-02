@@ -87,7 +87,4 @@ print(round(score*5, 3))
 trained_model.write().overwrite().save("spark-model")
 
 
-"""
-model = CrossValidatorModel.load("./spark-model")
-我不知道save这个model 对你build前端有没有帮助 但是我还是写一下万一你用的上 用不上就删了：）
-"""
+
